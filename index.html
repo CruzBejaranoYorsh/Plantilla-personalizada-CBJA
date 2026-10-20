@@ -33,6 +33,42 @@
   html { scroll-behavior: smooth; }
   body { font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; }
   code, .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+  .practice-link {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    border: 1px solid rgb(248 113 113 / 35%);
+    border-radius: .75rem;
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    padding: .625rem .875rem;
+    color: #fff;
+    font-size: .875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+    box-shadow: 0 4px 10px rgb(127 29 29 / 18%);
+    transition: background .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+  }
+  .practice-link:hover {
+    background: linear-gradient(135deg, #b91c1c, #991b1b);
+    box-shadow: 0 6px 14px rgb(127 29 29 / 25%);
+    transform: translateY(-1px);
+  }
+  .practice-link:focus-visible {
+    outline: 3px solid #fca5a5;
+    outline-offset: 3px;
+  }
+  .practice-link.is-clicked {
+    border-color: rgb(110 231 183 / 55%);
+    background: linear-gradient(135deg, #059669, #047857);
+    box-shadow: 0 4px 12px rgb(4 120 87 / 25%);
+  }
+  .practice-link.is-clicked:hover {
+    background: linear-gradient(135deg, #047857, #065f46);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .practice-link { transition: none; }
+    .practice-link:hover { transform: none; }
+  }
 </style>
 </head>
 <body class="bg-slate-50 text-ink antialiased">
@@ -149,24 +185,32 @@
       <li class="rounded-xl bg-white/5 border border-white/10 p-5 hover:bg-white/10 transition">
         <p class="text-xs font-bold text-orange-300 uppercase">Unidad 1</p>
         <p class="font-semibold mt-1">Portafolio estático (HTML + Tailwind)</p>
-        <a href="https://portafolio-cbja.onrender.com/" class="text-sm text-brand-300 hover:underline mt-2 inline-block break-all">Practica 1: Portafolio</a>
-        <a href="https://ine-personal-cbja.onrender.com/" class="text-sm text-brand-300 hover:underline mt-2 inline-block break-all">Practica 2: INE personal CBJA</a>
+        <div class="mt-4 flex flex-wrap gap-3">
+          <a href="https://portafolio-cbja.onrender.com/" target="_blank" rel="noopener noreferrer" class="practice-link">Práctica 1: Portafolio <span aria-hidden="true">↗</span></a>
+          <a href="https://ine-personal-cbja.onrender.com/" target="_blank" rel="noopener noreferrer" class="practice-link">Práctica 2: INE personal CBJA <span aria-hidden="true">↗</span></a>
+        </div>
       </li>
       <li class="rounded-xl bg-white/5 border border-white/10 p-5 hover:bg-white/10 transition">
         <p class="text-xs font-bold text-emerald-300 uppercase">Unidad 2</p>
         <p class="font-semibold mt-1">Prácticas con Django + MySQL</p>
-        <a href="https://practica-1-hola-desde-mysql-cbja.onrender.com/" class="text-sm text-brand-300 hover:underline mt-2 block break-all">Práctica 1: Hola desde MySQL</a>
-        <a href="https://practica-2-servicios-cbja.onrender.com/" class="text-sm text-brand-300 hover:underline mt-2 block break-all">Práctica 2: Servicios</a>
+        <div class="mt-4 flex flex-wrap gap-3">
+          <a href="https://practica-1-hola-desde-mysql-cbja.onrender.com/" target="_blank" rel="noopener noreferrer" class="practice-link">Práctica 1: Hola desde MySQL <span aria-hidden="true">↗</span></a>
+          <a href="https://practica-2-servicios-cbja.onrender.com/" target="_blank" rel="noopener noreferrer" class="practice-link">Práctica 2: Servicios <span aria-hidden="true">↗</span></a>
+        </div>
       </li>
       <li class="rounded-xl bg-white/5 border border-white/10 p-5 hover:bg-white/10 transition">
         <p class="text-xs font-bold text-blue-300 uppercase">Unidad 3</p>
         <p class="font-semibold mt-1">CRUD dinámico con login y sesiones</p>
-        <a href="https://u3s5-cruz-bejarano-jorge-alejandro.onrender.com/servicios/" class="text-sm text-brand-300 hover:underline mt-2 inline-block break-all">Practica 1: Crud</a>
+        <div class="mt-4 flex flex-wrap gap-3">
+          <a href="https://u3s5-cruz-bejarano-jorge-alejandro.onrender.com/servicios/" target="_blank" rel="noopener noreferrer" class="practice-link">Práctica 1: CRUD <span aria-hidden="true">↗</span></a>
+        </div>
       </li>
       <li class="rounded-xl bg-white/5 border border-white/10 p-5 hover:bg-white/10 transition">
         <p class="text-xs font-bold text-red-300 uppercase">Unidad 4</p>
         <p class="font-semibold mt-1">Proyecto integrador final</p>
-        <a href="https://u4s5-cruz-bejarano-jorge-alejandro.onrender.com/proyecto/" class="text-sm text-brand-300 hover:underline mt-2 inline-block break-all">[URL-UNIDAD-4]</a>
+        <div class="mt-4 flex flex-wrap gap-3">
+          <a href="https://u4s7-cruz-bejarano-jorge-alejandro.onrender.com//" target="_blank" rel="noopener noreferrer" class="practice-link">Práctica 1: Pulido funcional, UX y simulacro de defensa <span aria-hidden="true">↗</span></a>
+        </div>
       </li>
     </ul>
   </div>
@@ -191,5 +235,19 @@
   </div>
 </footer>
 
+<script>
+  const practiceLinkTimers = new WeakMap();
+
+  document.querySelectorAll('.practice-link').forEach((link) => {
+    link.addEventListener('click', () => {
+      link.classList.add('is-clicked');
+      window.clearTimeout(practiceLinkTimers.get(link));
+      practiceLinkTimers.set(link, window.setTimeout(() => {
+        link.classList.remove('is-clicked');
+        practiceLinkTimers.delete(link);
+      }, 10000));
+    });
+  });
+</script>
 </body>
 <script>'undefined'=== typeof _trfq || (window._trfq = []);'undefined'=== typeof _trfd && (window._trfd=[]),_trfd.push({'tccl.baseHost':'secureserver.net'},{'ap':'cpsh-oh'},{'server':'p3plzcpnl504927'},{'dcenter':'p3'},{'cp_id':'10837813'},{'cp_cl':'8'}) // Monitoring performance to make your website faster. If you want to opt-out, please contact web hosting support.</script><script src='https://img1.wsimg.com/traffic-assets/js/tccl.min.js'></script></html>
